@@ -1,6 +1,6 @@
 {
   "name": "@gannonh/firebase-mcp",
-  "version": "1.3.4",
+  "version": "1.0.0",
   "description": "Firebase MCP server for interacting with Firebase services through the Model Context Protocol",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,44 +14,38 @@
   ],
   "scripts": {
     "build": "tsc",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:emulator": "USE_FIREBASE_EMULATOR=true vitest run",
-    "test:coverage": "vitest run --coverage",
-    "test:coverage:emulator": "USE_FIREBASE_EMULATOR=true vitest run --coverage",
-    "test:verbose": "clear && vitest run --reporter verbose",
+    "test": "jest",
+    "test:emulator": "USE_FIREBASE_EMULATOR=true jest",
     "start": "node dist/index.js",
     "dev": "tsc && node dist/index.js",
-    "lint": "eslint 'src/**/*.ts'",
-    "lint:fix": "eslint 'src/**/*.ts' --fix",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
-    "preflight": "npm run format && npm run lint && npm run build && npm run test:coverage:emulator && npm ls --depth=0",
-    "preflight:prod": "npm run format && npm run lint && npm run build && npm run test:coverage && npm ls --depth=0",
-    "preflight:both": "npm run preflight && npm run preflight:prod",
-    "publish-preflight": "npm run format:check && npm run lint && npm run build",
     "prepublishOnly": "npm run build"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": ["./jest.setup.js"],
+    "testMatch": [
+      "**/__tests__/**/*.ts?(x)",
+      "**/?(*.)+(spec|test).ts?(x)"
+    ]
   },
   "directories": {
     "test": "test"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.8.0",
-    "axios": "^1.8.4",
-    "firebase-admin": "^13.2.0"
+    "@modelcontextprotocol/sdk": "^1.6.1",
+    "axios": "^1.6.7",
+    "firebase-admin": "^13.2.0",
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2"
   },
   "devDependencies": {
-    "@types/express": "^5.0.1",
-    "@types/node": "^22.14.0",
-    "@typescript-eslint/eslint-plugin": "^8.29.1",
-    "@typescript-eslint/parser": "^8.29.1",
-    "@vitest/coverage-v8": "^3.1.1",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^10.1.2",
-    "eslint-plugin-prettier": "^5.2.6",
-    "prettier": "^3.5.3",
-    "typescript": "^5.8.3",
-    "vitest": "^3.1.1"
+    "@types/express": "^5.0.0",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.13.10",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.2.6",
+    "typescript": "^5.8.2"
   },
   "engines": {
     "node": ">=16.0.0"
